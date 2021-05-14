@@ -330,28 +330,34 @@ inline Matrix2f getJ(float x, float y) {
     return J;
 }
 
-void sampleForFlatFlakes(const char*/* exrFilename */, const char */*flakesFilename */) {
-    // vector<FlatFlake> flatFlakes;
+// Asen Atanasov: Uncomment the code for generating flat elements and write binary file.
+void sampleForFlatFlakes(const char* exrFilename, const char *flakesFilename) {
+     read_normal_map(exrFilename, width, height);
 
-    // read_normal_map(exrFilename, width, height);
+     FILE* fp = fopen(flakesFilename, "wb");
 
-    // for (int i = 0; i < height; i++) {
-    //     for (int j = 0; j < width; j++) {
-    //         Vector2f u0(i, j);
-    //         Vector2f n0 = getNormal(i * 1.0f / width, j * 1.0f / height);
-    //         Vector2f shape(1.0f / sqrt(12.0f), 1.0f / sqrt(12.0f));
+     int type = 0;
+     fwrite(&type, sizeof(int), 1, fp);
+     fwrite(&width, sizeof(int), 1, fp);
+     fwrite(&height, sizeof(int), 1, fp);
+     int numFlakes = height*width;
+     fwrite(&numFlakes, sizeof(int), 1, fp);
 
-    //         flatFlakes.push_back(FlatFlake(u0, n0, shape));
-    //     }
-    // }
+     for (int i = 0; i < width; i++) {
+         for (int j = 0; j < height; j++) {
+             Vector2f u0(i, j);
+             Vector2f n0 = getNormal(i * 1.0f / width, j * 1.0f / height);
+             Vector2f shape(1.0f / sqrt(12.0f), 1.0f / sqrt(12.0f));
 
-    // FILE *fp = fopen(flakesFilename, "w");
-    // fprintf(fp, "%d\n", 0);
-    // fprintf(fp, "%d %d\n", width, height);
-    // for (int i = 0; i < flatFlakes.size(); i++) {
-    //     fprintf(fp, "%f %f %f %f %f %f\n", flatFlakes[i].u0[0], flatFlakes[i].u0[1], flatFlakes[i].n0[0], flatFlakes[i].n0[1],flatFlakes[i].shape[0], flatFlakes[i].shape[1]);
-    // }
-    // fclose(fp);
+             fwrite(&u0[0], sizeof(float), 1, fp);
+             fwrite(&u0[1], sizeof(float), 1, fp);
+             fwrite(&n0[0], sizeof(float), 1, fp);
+             fwrite(&n0[1], sizeof(float), 1, fp);
+             fwrite(&shape[0], sizeof(float), 1, fp);
+             fwrite(&shape[1], sizeof(float), 1, fp);
+         }
+     }
+     fclose(fp);
 }
 
 // Binary version
@@ -398,8 +404,9 @@ void sampleForLinearFlakes(const char* exrFilename, const char *flakesFilename, 
 }
 
 int main(int argc, char **argv) {
-    if (argc != 4) {
-        cout << "Usage: ./normalmap_to_flakes exr_filename flakes_filename sampling_rate" << endl;
+    if (argc != 3 && argc != 4) {
+        cout << "Usage: ./normalmap_to_flakes exr_filename flakes_filename [sampling_rate]" << endl;
+        cout << "If sampling_rate is provided then curved Gaussian elements are created, otherwise flat." << endl;
         return 0;
     }
 
@@ -409,8 +416,11 @@ int main(int argc, char **argv) {
     strcpy(EXR_FILENAME, argv[1]);
     strcpy(FLAKES_FILENAME, argv[2]);
 
-    // sampleForFlatFlakes(EXR_FILENAME, FLAKES_FILENAME);
-    sampleForLinearFlakes(EXR_FILENAME, FLAKES_FILENAME, atof(argv[3]));
+    if (argc == 4) {
+        sampleForLinearFlakes(EXR_FILENAME, FLAKES_FILENAME, atof(argv[3]));
+    } else {
+        sampleForFlatFlakes(EXR_FILENAME, FLAKES_FILENAME);
+    }
 
     return 0;
 }

@@ -448,6 +448,26 @@ private:
         fread(&m_resolutionV, sizeof(int), 1, fp);
         fread(&numFlakes, sizeof(int), 1, fp);
 
+        // Asen Atanasov: This block for reading flat elements was missing from the original Yan code.
+        // Flat elements 
+        if (type == 0) {
+            printf("Reading flakes file...");
+            float* buffer = new float[6 * numFlakes];
+            fread(buffer, sizeof(float), 6 * numFlakes, fp);
+            printf("OK!\n");
+            printf("Generating flakes...");
+            for (int i = 0; i < numFlakes; i++) {
+                Vector2f u0(buffer[i * 6 + 0], buffer[i * 6 + 1]);
+                Vector2f n0(buffer[i * 6 + 2], buffer[i * 6 + 3]);
+                Vector2f shape(buffer[i * 6 + 4], buffer[i * 6 + 5]);
+                Flake* currentFlake = new FlatFlake(u0, n0, shape, 1.0f);
+                m_flakes.push_back(currentFlake);
+            }
+            delete[] buffer;
+            printf("OK!\n");
+        }
+
+        // Curved elements
         if (type == 1) {
             printf("Reading flakes file...");
             float *buffer = new float[11 * numFlakes];
