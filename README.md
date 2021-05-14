@@ -6,7 +6,7 @@ Mitsuba 2 plugin of the paper ["A Multiscale Microfacet Model Based on Inverse B
 
 ## Compilation
 
-The normal compilation instructions for Mitsuba 2 apply. See the ["Getting started"](https://mitsuba2.readthedocs.io/en/latest/src/getting_started/intro.html) sections in the documentation. For this project, only the *scalar_{rgb,spectral}* variants are tested. The paper shows results generated with *scalar_rgb*.
+The normal compilation instructions for Mitsuba 2 apply. See the ["Getting started"](https://mitsuba2.readthedocs.io/en/latest/src/getting_started/intro.html) sections in the documentation.
 
 ---
 
