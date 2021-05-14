@@ -8,6 +8,10 @@ Mitsuba 2 plugin of the paper ["A Multiscale Microfacet Model Based on Inverse B
 
 The normal compilation instructions for Mitsuba 2 apply. See the ["Getting started"](https://mitsuba2.readthedocs.io/en/latest/src/getting_started/intro.html) sections in the documentation.
 
+## Scenes
+
+Shoes and Kettle scenes by Zeltner et al. 2020 are setup for different methods and are found in *results/Figure_19_GlintsComparison*. Copies of the original scenes with our proposed BRDF *glints_ibm* are named *shoes_ibm.xml* and *kettle_ibm.xml*. In the paper we present results with different *glints_ibm::beckmann_roughness* and *glints_ibm::tiles* parameters.
+
 ---
 
 <img src="https://github.com/mitsuba-renderer/mitsuba2/raw/master/docs/images/logo_plain.png" width="120" height="120" alt="Mitsuba logo">
