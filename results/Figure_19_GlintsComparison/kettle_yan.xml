@@ -18,7 +18,7 @@
         <float name="alpha" value="0.25"/>
         <string name="distribution" value="beckmann"/>
         <string name="filename" value="textures/brushed.flakes"/>
-        <float name="intrinsic" value="0.001"/>
+        <float name="intrinsic" value="0.005"/>
         <float name="tiles" value="1"/>
     </bsdf>
 
