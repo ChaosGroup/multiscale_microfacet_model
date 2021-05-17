@@ -10,7 +10,7 @@ The normal compilation instructions for Mitsuba 2 apply. See the ["Getting start
 
 ## Scenes
 
-Shoes and Kettle scenes by Zeltner et al. 2020 are setup for different methods and are found in *results/Figure_19_GlintsComparison*. Copies of the original scenes with our proposed BRDF *glints_ibm* are named *shoes_ibm.xml* and *kettle_ibm.xml*. In the paper we present results with different *glints_ibm::beckmann_roughness* and *glints_ibm::tiles* parameters.
+Shoes and Kettle scenes by Zeltner et al. 2020 are set up for different methods and are found in *results/Figure_19_GlintsComparison*. Copies of the original scenes with our proposed BRDF *glints_ibm* are named *shoes_ibm.xml* and *kettle_ibm.xml*. In the paper we present results with different *glints_ibm::beckmann_roughness* and *glints_ibm::tiles* parameters.
 
 ---
 
